@@ -14,7 +14,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const client = await getClient();
+    let client;
+    try {
+      client = await getClient();
+    } catch (dbError: any) {
+      console.error('Login DB connect error:', dbError);
+      const msg = 'Cannot connect to MongoDB. Likely network/IP whitelist or TLS issue. Check MongoDB Atlas Network Access and ensure Vercel can reach the cluster.';
+      return NextResponse.json({ error: msg, detail: dbError?.message }, { status: 503 });
+    }
     const db = client.db('taskmanager');
     const usersCollection = db.collection('users');
 
