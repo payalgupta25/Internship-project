@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAuthCookie } from '@/lib/cookies';
-import clientPromise from '@/lib/db';
+import getClient from '@/lib/db';
 import { ObjectId } from 'mongodb';
 
 export async function GET(
@@ -16,7 +16,7 @@ export async function GET(
 
     const { id } = await params;
 
-    const client = await clientPromise;
+    const client = await getClient();
     const db = client.db('taskmanager');
     const sessionsCollection = db.collection('sessions');
 

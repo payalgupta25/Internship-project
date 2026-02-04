@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { clearAuthCookie, getAuthCookie } from '@/lib/cookies';
-import clientPromise from '@/lib/db';
+import getClient from '@/lib/db';
 
 export async function POST(request: NextRequest) {
   try {
     const token = await getAuthCookie();
 
     if (token) {
-      const client = await clientPromise;
+      const client = await getClient();
       const db = client.db('taskmanager');
       const sessionsCollection = db.collection('sessions');
       await sessionsCollection.deleteOne({ token });

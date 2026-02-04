@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAuthCookie } from '@/lib/cookies';
-import clientPromise from '@/lib/db';
+import getClient from '@/lib/db';
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const client = await clientPromise;
+    const client = await getClient();
     const db = client.db('taskmanager');
     const sessionsCollection = db.collection('sessions');
 

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import clientPromise from '@/lib/db';
+import getClient from '@/lib/db';
 import { hashPassword, generateToken, getTokenExpiry } from '@/lib/auth';
 import { setAuthCookie } from '@/lib/cookies';
 
@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const client = await clientPromise;
+    const client = await getClient();
     const db = client.db('taskmanager');
     const usersCollection = db.collection('users');
 
