@@ -55,7 +55,12 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
 
-    await setAuthCookie(token);
+    try {
+      await setAuthCookie(token);
+    } catch (cookieError) {
+      console.error('Failed to set auth cookie:', cookieError);
+      // don't fail the whole request for cookie-setting issues
+    }
 
     return response;
   } catch (error) {

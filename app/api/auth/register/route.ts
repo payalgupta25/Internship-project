@@ -52,7 +52,11 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
 
-    await setAuthCookie(token);
+      try {
+        await setAuthCookie(token);
+      } catch (cookieError) {
+        console.error('Failed to set auth cookie:', cookieError);
+      }
 
     return response;
   } catch (error) {
