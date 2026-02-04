@@ -2,7 +2,11 @@
 
 import useSWR from 'swr';
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) return null;
+  return res.json();
+};
 
 export function useUser() {
   const { data, error, isLoading, mutate } = useSWR('/api/auth/me', fetcher, {

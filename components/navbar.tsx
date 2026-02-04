@@ -28,11 +28,11 @@ export function Navbar() {
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
                     <span className="text-xs font-semibold text-primary">
-                      {user.name.charAt(0).toUpperCase()}
+                      {((user?.name && user.name.charAt(0)) || '?').toString().toUpperCase()}
                     </span>
                   </div>
                   <span className="text-sm font-medium hidden sm:inline">
-                    {user.name}
+                    {user?.name || 'User'}
                   </span>
                 </div>
                 {user.role === 'admin' && (
